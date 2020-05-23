@@ -1,0 +1,139 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+
+/* HEADER */
+
+header{
+    position: sticky;
+    top: 0; 
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: 5vh;
+    background-color: cadetblue;
+    color: #fff;
+}
+
+.nome-site{
+    font-size: 25px;
+    padding: 10px;
+}
+
+/* MENU */
+
+.btn-hamburger{
+    margin-left: 5px;
+    width: 40px;
+    height: 40px;
+    color: #fff;
+    background-color: cadetblue;
+    border: none;
+    font-size: 20px;
+}
+
+#btn-close{
+    display: none;
+}
+
+#menu{
+    display: none;
+}
+
+.menu-lg{
+    width: 200px;
+    height: 100vh;
+    position: fixed;
+    background-color: cadetblue;
+}
+
+#menu ul{
+    list-style: none;
+    text-align: center;
+}
+
+#menu ul li{
+    margin: 10px 0px;
+}
+
+#menu ul li a{
+    text-decoration: none;
+    color: #fff;
+}
+
+/* CONTEÚDO */
+
+.container{
+    width: 80vw;
+    height: 80vh;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+}
+
+.content{
+    margin-top: 25px;
+    width: 100%;
+    text-align: justify;
+}
+
+
+#maze{
+    /* display: flex;
+    flex-wrap: wrap;
+    align-items: stretch; */
+    margin-top: 20px;
+    
+    width: 32vw;
+    height: 32vw;
+}
+
+.casa{
+    float: left;
+    width: 3vw;
+    height: 3vw;
+    
+    
+    
+}
+
+.vazia{
+    background-color: cadetblue;
+}
+
+.personagem{
+    background-color: yellow;
+}
+
+.aberto{
+    background-color: #fff;
+}
+
+.parede{
+    background-color: black;
+}
+
+.embusca{
+    background-color: green;
+}
+
+.caminho{
+    background-color: coral;
+}
+
+.abatido{
+    background-color: blueviolet;
+}
+
+
+
+
+
+
+
+
+
+
+
