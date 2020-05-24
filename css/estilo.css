@@ -86,15 +86,15 @@ header{
     align-items: stretch; */
     margin-top: 20px;
     
-    width: 32vw;
-    height: 32vw;
+    width: 33vw;
+    height: 33vw;
 }
 
 .casa{
     float: left;
     width: 3vw;
     height: 3vw;
-    
+    border: 1px solid black;
     
     
 }

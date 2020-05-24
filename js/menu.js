@@ -22,6 +22,7 @@ class House  {
         this.casa = casa;
         this.x = x;
         this.y = y;
+        this.furavel = false;
     }
 
     atualizarCasa(novoX, novoY){
@@ -104,7 +105,7 @@ function montarTabuleiro(){
 }
  
 function escolherCasaAleatoria(){
-    let i = parseInt ((Math.random() * (tabuleiroCompleto.length - 1)));
+    let i = parseInt ( (Math.random() * (tabuleiroCompleto.length - 1)) );
     return tabuleiroCompleto[i];
 }
 
@@ -134,37 +135,86 @@ document.addEventListener("keydown", function(e){
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function gerarLabirinto(){
-    let casaInicial = escolherCasaAleatoria();
+    let casaInicial = new House (
+        document.getElementById(gerarId(1,  1)),
+        1,
+        1
+    );
+
+
+    // = escolherCasaAleatoria();
+
+
+
+
     // let casaDois = escolherCasaAleatoria();
     swapCasaClass(casaInicial.casa, vazia, aberto);
     pilha.push(casaInicial);
     // pilha.push(casaDois);
-
-    // while(!pilha.empty){
-        pegarFuraveis(pilha.slice(-1));
-
-    // }
-    
-    
-    
-    // console.log(pilha.slice(-1));
-}
-
-
-function pegarFuraveis(casa){
-    console.log(casa);
-    let vizinhos = getNeibs(casa[0]);
-    // console.log(vizinhos);
-    for(viz of vizinhos){
-        let fur = furavel(viz);
-        if(!fur){
-            vizinhos.splice(1,1,viz);
+    let iteracoes = 0;
+    while(!pilha.empty){
+        let neibs = getNeibs(pilha.slice(-1)[0]);
+        // pegarFuraveis(pilha.slice(-1));
+        
+        let furaveis = [];
+        for(let i = 0; i < neibs.length; i++){
+            neibs[i].furavel = furavel(neibs[i]);
         }
+        
+        const furavell = el => { return el.furavel === true; }
+        furaveis = neibs.filter(furavell);
+
+        // console.log(furaveis);
+        if(furaveis.length == 0){
+            pilha.pop();
+        }
+        else{
+            let indice = sortearFurado(furaveis.length);
+            let sorteado = furaveis[indice];
+            swapCasaClass(sorteado.casa, vazia, aberto);
+            pilha.push(sorteado);
+            // console.log(sorteado);
+        }
+        iteracoes++;
     }
     
-    console.log(vizinhos);
 }
+
+
+function sortearFurado(furaveisSize){
+    return parseInt ( (Math.random() * (furaveisSize)) );
+}
+
+
 
 function furavel(vizinho){
     let cont = 0;
@@ -172,9 +222,14 @@ function furavel(vizinho){
     if(!vizinho.casa.classList.contains(vazia)){
         return false;
     }
+    console.log("get neibs segunda camada")
     let vizinhosSegCamada = getNeibs(vizinho);
+    console.log(vizinhosSegCamada);
     
-    
+    if(vizinhosSegCamada.length <= 2){
+        return false;
+    }
+
     for(vizinhoSeg of vizinhosSegCamada){
         if(vizinhoSeg.casa.classList.contains(vazia)){
             cont++;
@@ -190,54 +245,89 @@ function furavel(vizinho){
 }
 
 function getNeibs(casa){
+    console.log(casa);
     let vizinhos = [];
+    const x = casa.x;
+    const y = casa.y;
     
-    if(casa.x - 1 >= 0 && casa.y < largura){
-        casaAcima = new House (
-            document.getElementById(gerarId(casa.x - 1, casa.y)),
+    
+    
+    // vizinhos.push(vizinhoAcima(casa.x, casa.y));
+    
+    if(x - 1 >= 0 && y < largura){
+        let provX = x - 1;
+        let casaAcima = new House (
+            document.getElementById(gerarId(x - 1, y)),
             casa.x - 1,
-            casa.y
+            y
         );
-        vizinhos.push(
-            casaAcima
-        );
+        if(!casaAcima.casa.classList.contains(aberto)){
+            vizinhos.push(
+                casaAcima
+            );
+        }
+    }
+    
+   
+    // vizinhos.push(vizinhoAbaixo(casa.x, casa.y));
+    if(x + 1 < altura && y < largura){
+        
+        let casaAbaixo = new House (
+                document.getElementById(gerarId(x + 1, y)),
+                x + 1,
+                y
+            );
+        if(!casaAbaixo.casa.classList.contains(aberto)){
+            vizinhos.push(
+                casaAbaixo
+            );
+        }
+            
+    }
+    
+    //  x = casa.x;
+    //  y = casa.y;
+
+    if(x < altura && y - 1 >= 0){
+        
+        let casaEsquerda = new House (
+                document.getElementById(gerarId(x, y - 1)),
+                x,
+                y - 1
+            );
+        if(!casaEsquerda.casa.classList.contains(aberto)){
+            vizinhos.push(
+                casaEsquerda
+            );
+        }
     }
 
-    if(casa.x + 1 < altura && casa.y < largura){
-        vizinhos.push(
-            new House (
-                document.getElementById(gerarId(casa.x + 1, casa.y)),
-                casa.x + 1,
-                casa.y
-            )
-        );
+    //  x = casa.x;
+    //  y = casa.y;
+
+    if(x < altura && y + 1 < largura){
+        
+        let casaDireita = new House (
+                document.getElementById(gerarId(x, y + 1)),
+                x,
+                y + 1
+            );
+        if(!casaDireita.casa.classList.contains(aberto)){
+            vizinhos.push(
+                casaDireita
+            );
+        }
     }
 
-    if(casa.x < altura && casa.y - 1 >= 0){
-        vizinhos.push(
-            new House (
-                document.getElementById(gerarId(casa.x, casa.y - 1)),
-                casa.x,
-                casa.y - 1
-            )
-        );
-    }
+    //  x = casa.x;
+    //  y = casa.y;
 
-    if(casa.x < altura && casa.y + 1 < largura){
-        vizinhos.push(
-            new House (
-                document.getElementById(gerarId(casa.x, casa.y + 1)),
-                casa.x,
-                casa.y + 1
-            )
-        );
-    }
     for(viz of vizinhos){
         if(viz == null){
             vizinhos.splice(1,1,viz);
         }
     }
-
+    // console.log(vizinhos);
     return vizinhos;
 }
 
@@ -249,6 +339,83 @@ function getNeibs(casa){
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function vizinhoAcima(x, y){
+    if(x >= 0 && y < largura){
+        
+        let casaAcima = new House (
+            document.getElementById(gerarId(x - 1, y)),
+            x,
+            y
+        );
+        if(!casaAcima.casa.classList.contains(aberto)){
+            // vizinhos.push(
+                return casaAcima;
+            // );
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function vizinhoAbaixo(x, y){
+    console.log(x + " " + y);
+    if(x + 1 < altura && y < largura){
+        console.log(x + " pos if " + y);
+        casaAbaixo = new House (
+                document.getElementById(gerarId(x + 1, y)),
+                x + 1,
+                y
+            );
+        return casaAbaixo;
+    }
+}
 
 
 
