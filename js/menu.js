@@ -26,13 +26,23 @@ class House  {
     }
 
     atualizarCasa(novoX, novoY){
-        this.x = novoX;
-        this.y = novoY;
-        let novoIdCasa = gerarId(this.x, this.y);
+
+        let novoIdCasa = gerarId(novoX, novoY);
         let novaCasa = document.getElementById(novoIdCasa);
 
-        swapCasaClass(this.casa, personagem, vazia);
-        swapCasaClass(novaCasa, vazia, personagem);
+        if(novaCasa.classList.contains(vazia)){
+            return;
+        }
+
+        this.x = novoX;
+        this.y = novoY;
+        // let novoIdCasa = gerarId(this.x, this.y);
+        // let novaCasa = document.getElementById(novoIdCasa);
+
+        
+
+        swapCasaClass(this.casa, personagem, aberto);
+        swapCasaClass(novaCasa, aberto, personagem);
 
         this.casa = novaCasa;
         
@@ -99,21 +109,43 @@ function montarTabuleiro(){
         }
     }
     gerarLabirinto();
+    console.log(labrintoCompleto);
     // escolherCasaAleatoria();
     // console.log(tabuleiroCompleto[0]);
-    // atribuirCasaInicial();
+    atribuirCasaInicial();
 }
- 
+
+function escolherCasaInicialAleatoria(){
+    let x = parseInt ( (Math.random() * (altura - 1) + 1) );
+    let y = parseInt ( (Math.random() * (largura - 1) + 1) );
+    
+    let primeiraCasa =  new House (
+        document.getElementById(gerarId(x , y)),
+        x ,
+        y
+    );
+    
+    return primeiraCasa;
+}
+
 function escolherCasaAleatoria(){
     let i = parseInt ( (Math.random() * (tabuleiroCompleto.length - 1)) );
     return tabuleiroCompleto[i];
 }
 
+function escolherCasaAleatoriaDoLabirinto(){
+    let i = parseInt ( (Math.random() * (labrintoCompleto.length - 1)) );
+    console.log(i);
+    // console.log(tabu)
+    return labrintoCompleto[i];
+}
+
 function atribuirCasaInicial(){
-    let houseNow = escolherCasaAleatoria();
-    swapCasaClass(houseNow.casa, vazia, personagem);
+    let houseNow = escolherCasaAleatoriaDoLabirinto();
+    swapCasaClass(houseNow.casa, aberto, personagem);
+    // console.log(houseNow);
     Jogador.construtor(houseNow);
-    console.log(Jogador);
+    // console.log(Jogador);
    
 }
 
@@ -164,11 +196,13 @@ document.addEventListener("keydown", function(e){
 
 
 function gerarLabirinto(){
-    let casaInicial = new House (
-        document.getElementById(gerarId(1,  1)),
-        1,
-        1
-    );
+    let casaInicial =  escolherCasaAleatoria();
+    
+    // new House (
+    //     document.getElementById(gerarId(1,  1)),
+    //     1,
+    //     1
+    // );
 
 
     // = escolherCasaAleatoria();
@@ -183,6 +217,9 @@ function gerarLabirinto(){
     let iteracoes = 0;
     while(!pilha.empty){
         let neibs = getNeibs(pilha.slice(-1)[0]);
+        if(neibs == undefined){
+            return;
+        }
         // pegarFuraveis(pilha.slice(-1));
         
         let furaveis = [];
@@ -193,16 +230,17 @@ function gerarLabirinto(){
         const furavell = el => { return el.furavel === true; }
         furaveis = neibs.filter(furavell);
 
-        // console.log(furaveis);
+        
         if(furaveis.length == 0){
             pilha.pop();
         }
         else{
             let indice = sortearFurado(furaveis.length);
             let sorteado = furaveis[indice];
+            labrintoCompleto.push(sorteado);
             swapCasaClass(sorteado.casa, vazia, aberto);
             pilha.push(sorteado);
-            // console.log(sorteado);
+            
         }
         iteracoes++;
     }
@@ -222,9 +260,9 @@ function furavel(vizinho){
     if(!vizinho.casa.classList.contains(vazia)){
         return false;
     }
-    console.log("get neibs segunda camada")
+    
     let vizinhosSegCamada = getNeibs(vizinho);
-    console.log(vizinhosSegCamada);
+    
     
     if(vizinhosSegCamada.length <= 2){
         return false;
@@ -245,7 +283,10 @@ function furavel(vizinho){
 }
 
 function getNeibs(casa){
-    console.log(casa);
+    if (casa == undefined){
+        return;
+    }
+
     let vizinhos = [];
     const x = casa.x;
     const y = casa.y;
@@ -327,7 +368,7 @@ function getNeibs(casa){
             vizinhos.splice(1,1,viz);
         }
     }
-    // console.log(vizinhos);
+    
     return vizinhos;
 }
 
@@ -405,9 +446,9 @@ function vizinhoAcima(x, y){
 
 
 function vizinhoAbaixo(x, y){
-    console.log(x + " " + y);
+    // console.log(x + " " + y);
     if(x + 1 < altura && y < largura){
-        console.log(x + " pos if " + y);
+        // console.log(x + " pos if " + y);
         casaAbaixo = new House (
                 document.getElementById(gerarId(x + 1, y)),
                 x + 1,
