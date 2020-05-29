@@ -95,7 +95,7 @@ header{
     width: 3vw;
     height: 3vw;
     border: 1px solid black;
-    
+    /* background-color: cadetblue; */
     
 }
 
@@ -108,7 +108,7 @@ header{
 }
 
 .aberto{
-    background-color: #fff;
+    background-color: cadetblue;
 }
 
 .parede{
@@ -127,7 +127,9 @@ header{
     background-color: blueviolet;
 }
 
-
+.fruta{
+    background-color: red;
+}
 
 
 

@@ -1,6 +1,7 @@
 const altura = 10, largura = 10;
 var tabuleiro = document.getElementById("maze");
 var jogo = true;
+var houseFruit;
 // var playerCasa;
 
 const vazia = 'vazia';
@@ -10,8 +11,9 @@ const aberto = 'aberto';
 const embusca = 'embusca';
 const caminho = 'caminho';
 const abatido = 'abatido';
+const fruta = 'fruta';
 
-var pilha = [], labrintoCompleto = [], tabuleiroCompleto = [];
+var pilha = [], labrintoCompleto = [], tabuleiroCompleto = [], labrintoDisponivel = [];
 
 function gerarId(x, y){
     return "casa-" + x + "-" + y;
@@ -31,6 +33,7 @@ class House  {
         let novaCasa = document.getElementById(novoIdCasa);
 
         if(novaCasa.classList.contains(vazia)){
+            finalJogo(false);
             return;
         }
 
@@ -62,6 +65,8 @@ const eventosPlayer = {
             return;
         }
         Jogador.house.atualizarCasa(Jogador.house.x - 1, Jogador.house.y);
+        detectarColisao();
+        // console.log(houseFruit);
         console.log("Andando para cima");
     },
 
@@ -70,6 +75,7 @@ const eventosPlayer = {
             return;
         }
         Jogador.house.atualizarCasa(Jogador.house.x + 1, Jogador.house.y);
+        detectarColisao();
         console.log("Andando para baixo");
     },
 
@@ -78,6 +84,7 @@ const eventosPlayer = {
             return;
         }
         Jogador.house.atualizarCasa(Jogador.house.x, Jogador.house.y - 1);
+        detectarColisao();
         console.log("Andando para esquerda");
     },
 
@@ -86,6 +93,7 @@ const eventosPlayer = {
             return;
         }
         Jogador.house.atualizarCasa(Jogador.house.x, Jogador.house.y + 1);
+        detectarColisao();
         console.log("Andando para direita");
     }
 }
@@ -109,10 +117,11 @@ function montarTabuleiro(){
         }
     }
     gerarLabirinto();
-    console.log(labrintoCompleto);
+    // console.log(labrintoCompleto);
     // escolherCasaAleatoria();
     // console.log(tabuleiroCompleto[0]);
     atribuirCasaInicial();
+    atribuirCasaFruta();
 }
 
 function escolherCasaInicialAleatoria(){
@@ -128,9 +137,9 @@ function escolherCasaInicialAleatoria(){
     return primeiraCasa;
 }
 
-function escolherCasaAleatoria(){
-    let i = parseInt ( (Math.random() * (tabuleiroCompleto.length - 1)) );
-    return tabuleiroCompleto[i];
+function escolherCasaAleatoria(listaCasas){
+    let i = parseInt ( (Math.random() * (listaCasas.length - 1)) );
+    return listaCasas[i];
 }
 
 function escolherCasaAleatoriaDoLabirinto(){
@@ -143,10 +152,25 @@ function escolherCasaAleatoriaDoLabirinto(){
 function atribuirCasaInicial(){
     let houseNow = escolherCasaAleatoriaDoLabirinto();
     swapCasaClass(houseNow.casa, aberto, personagem);
-    // console.log(houseNow);
+    
     Jogador.construtor(houseNow);
-    // console.log(Jogador);
-   
+    
+    const disponivel = el => { return !el.casa.classList.contains(personagem); }
+    console.log(labrintoCompleto);
+    labrintoDisponivel = labrintoCompleto.filter(disponivel);
+    
+}
+
+
+function atribuirCasaFruta(){
+    houseFruit = escolherCasaAleatoria(labrintoDisponivel);
+    console.log(houseFruit);
+    swapCasaClass(houseFruit.casa, aberto, fruta);
+
+    const disponivel = el => { return !el.casa.classList.contains(fruta); }
+    console.log(labrintoCompleto);
+    labrintoDisponivel = labrintoCompleto.filter(disponivel);
+
 }
 
 function swapCasaClass(casa, remClass, addClass){
@@ -167,10 +191,28 @@ document.addEventListener("keydown", function(e){
 
 
 
+function finalJogo(resultado){
+    jogo = false;
+    if(resultado){
+        window.alert("Você venceu!");
+    } 
+    else if(!resultado){
+        window.alert("Você perdeu!");
+    } else{
+        console.error("Chame esta funcção com um valor boolean");
+    }
+}
 
 
 
-
+function detectarColisao(){
+    console.log(houseFruit);
+    if(houseFruit.casa.classList.contains(fruta) 
+        &&
+        houseFruit.casa.classList.contains(personagem)){
+            finalJogo(true);
+        } 
+}
 
 
 
@@ -196,7 +238,8 @@ document.addEventListener("keydown", function(e){
 
 
 function gerarLabirinto(){
-    let casaInicial =  escolherCasaAleatoria();
+    let casaInicial =  escolherCasaInicialAleatoria();
+    // =  escolherCasaAleatoria();
     
     // new House (
     //     document.getElementById(gerarId(1,  1)),
