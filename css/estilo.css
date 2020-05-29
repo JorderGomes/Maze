@@ -108,7 +108,8 @@ header{
 }
 
 .aberto{
-    background-color: cadetblue;
+    background-color: #fff;
+    /* background-color: cadetblue; */
 }
 
 .parede{
@@ -129,6 +130,10 @@ header{
 
 .fruta{
     background-color: red;
+}
+
+.luz{
+    background-color: #fff;
 }
 
 

@@ -2,6 +2,7 @@ const altura = 10, largura = 10;
 var tabuleiro = document.getElementById("maze");
 var jogo = true;
 var houseFruit;
+var alcanceMaximo = 5;
 // var playerCasa;
 
 const vazia = 'vazia';
@@ -12,11 +13,19 @@ const embusca = 'embusca';
 const caminho = 'caminho';
 const abatido = 'abatido';
 const fruta = 'fruta';
+const luz = 'luz';
 
 var pilha = [], labrintoCompleto = [], tabuleiroCompleto = [], labrintoDisponivel = [];
 
 function gerarId(x, y){
     return "casa-" + x + "-" + y;
+}
+
+class posicao {
+    constructor(x,y){
+        this.x = x;
+        this.y = y;
+    }
 }
 
 class House  {
@@ -122,6 +131,7 @@ function montarTabuleiro(){
     // console.log(tabuleiroCompleto[0]);
     atribuirCasaInicial();
     atribuirCasaFruta();
+    acenderLuzes();
 }
 
 function escolherCasaInicialAleatoria(){
@@ -156,7 +166,7 @@ function atribuirCasaInicial(){
     Jogador.construtor(houseNow);
     
     const disponivel = el => { return !el.casa.classList.contains(personagem); }
-    console.log(labrintoCompleto);
+    // console.log(labrintoCompleto);
     labrintoDisponivel = labrintoCompleto.filter(disponivel);
     
 }
@@ -164,11 +174,11 @@ function atribuirCasaInicial(){
 
 function atribuirCasaFruta(){
     houseFruit = escolherCasaAleatoria(labrintoDisponivel);
-    console.log(houseFruit);
+    // console.log(houseFruit);
     swapCasaClass(houseFruit.casa, aberto, fruta);
 
     const disponivel = el => { return !el.casa.classList.contains(fruta); }
-    console.log(labrintoCompleto);
+    // console.log(labrintoCompleto);
     labrintoDisponivel = labrintoCompleto.filter(disponivel);
 
 }
@@ -178,6 +188,52 @@ function swapCasaClass(casa, remClass, addClass){
     casa.classList.add(addClass);
 }
 
+function acenderLuzes(){
+    let maximo = alcanceMaximo;
+    // console.log(Jogador.house);
+    let alcance = getNeibs(Jogador.house);
+    for(viz of alcance){
+        
+        pos = new posicao(
+            viz.x - Jogador.house.x,
+            viz.y - Jogador.house.y
+        );
+        desenharAlcance(viz, maximo, pos);
+    }
+    // desenharAlcance
+}
+
+function desenharAlcance(viz, max, pos){
+    if(viz.casa == null){
+        return;
+    }
+    if(max == 0){
+        return;
+    }
+    if(viz.casa.classList.contains(vazia)){
+        return;
+    }
+    
+    console.log("desenhar");
+    viz.casa.classList.add(luz);
+    console.log(viz);
+    let auX = pos.x + viz.x;
+    let auY = pos.y + viz.y;
+    // console.log(viz);
+    viz = new House(
+        document.getElementById(gerarId(auX, auY)),
+        auX,
+        auY
+    );
+    // console.log(viz);
+    // console.log(pos);
+    max--;
+
+    desenharAlcance(viz, max, pos);
+
+
+
+}
 
 document.addEventListener("keydown", function(e){
     if (!jogo){
@@ -345,11 +401,11 @@ function getNeibs(casa){
             casa.x - 1,
             y
         );
-        if(!casaAcima.casa.classList.contains(aberto)){
+        // if(!casaAcima.casa.classList.contains(aberto)){
             vizinhos.push(
                 casaAcima
             );
-        }
+        // }
     }
     
    
@@ -361,11 +417,11 @@ function getNeibs(casa){
                 x + 1,
                 y
             );
-        if(!casaAbaixo.casa.classList.contains(aberto)){
+        // if(!casaAbaixo.casa.classList.contains(aberto)){
             vizinhos.push(
                 casaAbaixo
             );
-        }
+        // }
             
     }
     
@@ -379,11 +435,11 @@ function getNeibs(casa){
                 x,
                 y - 1
             );
-        if(!casaEsquerda.casa.classList.contains(aberto)){
+        // if(!casaEsquerda.casa.classList.contains(aberto)){
             vizinhos.push(
                 casaEsquerda
             );
-        }
+        // }
     }
 
     //  x = casa.x;
@@ -396,11 +452,11 @@ function getNeibs(casa){
                 x,
                 y + 1
             );
-        if(!casaDireita.casa.classList.contains(aberto)){
+        // if(!casaDireita.casa.classList.contains(aberto)){
             vizinhos.push(
                 casaDireita
             );
-        }
+        // }
     }
 
     //  x = casa.x;
