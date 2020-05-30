@@ -108,8 +108,8 @@ header{
 }
 
 .aberto{
-    background-color: #fff;
-    /* background-color: cadetblue; */
+    /* background-color: #fff; */
+    background-color: cadetblue;
 }
 
 .parede{

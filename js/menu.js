@@ -16,6 +16,8 @@ const fruta = 'fruta';
 const luz = 'luz';
 
 var pilha = [], labrintoCompleto = [], tabuleiroCompleto = [], labrintoDisponivel = [];
+var alcanceCasas = [];
+
 
 function gerarId(x, y){
     return "casa-" + x + "-" + y;
@@ -73,7 +75,9 @@ const eventosPlayer = {
         if(Jogador.house.x == 0){
             return;
         }
+        apagarLuzes();
         Jogador.house.atualizarCasa(Jogador.house.x - 1, Jogador.house.y);
+        acenderLuzes();
         detectarColisao();
         // console.log(houseFruit);
         console.log("Andando para cima");
@@ -83,7 +87,9 @@ const eventosPlayer = {
         if(Jogador.house.x == altura - 1){
             return;
         }
+        apagarLuzes();
         Jogador.house.atualizarCasa(Jogador.house.x + 1, Jogador.house.y);
+        acenderLuzes();
         detectarColisao();
         console.log("Andando para baixo");
     },
@@ -92,7 +98,9 @@ const eventosPlayer = {
         if(Jogador.house.y == 0){
             return;
         }
+        apagarLuzes();
         Jogador.house.atualizarCasa(Jogador.house.x, Jogador.house.y - 1);
+        acenderLuzes();
         detectarColisao();
         console.log("Andando para esquerda");
     },
@@ -101,7 +109,9 @@ const eventosPlayer = {
         if(Jogador.house.y == largura - 1){
             return;
         }
+        apagarLuzes();
         Jogador.house.atualizarCasa(Jogador.house.x, Jogador.house.y + 1);
+        acenderLuzes();
         detectarColisao();
         console.log("Andando para direita");
     }
@@ -190,7 +200,7 @@ function swapCasaClass(casa, remClass, addClass){
 
 function acenderLuzes(){
     let maximo = alcanceMaximo;
-    // console.log(Jogador.house);
+    alcanceCasas = [];
     let alcance = getNeibs(Jogador.house);
     for(viz of alcance){
         
@@ -200,7 +210,21 @@ function acenderLuzes(){
         );
         desenharAlcance(viz, maximo, pos);
     }
+    for(al of alcanceCasas){
+        al.casa.classList.add(luz);
+    }
+    // console.log(alcanceCasas);
+    // apagarLuzes();
     // desenharAlcance
+}
+
+function apagarLuzes(){
+    for(al of alcanceCasas){
+        al.casa.classList.remove(luz);
+    }
+    
+    
+    
 }
 
 function desenharAlcance(viz, max, pos){
@@ -213,20 +237,24 @@ function desenharAlcance(viz, max, pos){
     if(viz.casa.classList.contains(vazia)){
         return;
     }
+    if(viz.casa.classList.contains(fruta)){
+        return;
+    }
     
-    console.log("desenhar");
-    viz.casa.classList.add(luz);
-    console.log(viz);
+    // console.log("desenhar");
+    
+    // viz.casa.classList.add(luz);
+    alcanceCasas.push(viz);
+    // console.log(viz);
     let auX = pos.x + viz.x;
     let auY = pos.y + viz.y;
-    // console.log(viz);
+    
     viz = new House(
         document.getElementById(gerarId(auX, auY)),
         auX,
         auY
     );
-    // console.log(viz);
-    // console.log(pos);
+    
     max--;
 
     desenharAlcance(viz, max, pos);
