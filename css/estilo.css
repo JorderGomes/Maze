@@ -29,7 +29,7 @@ header{
     margin-bottom: 15px;
 }
 
-h2{
+h3, h5{
     margin: 15px 0px 10px 20px;
 }
 
@@ -38,6 +38,14 @@ p{
     margin: 5px 10px 5px 10px;
 }
 
+span{
+    margin-left: 10px;
+}
+
+.dificuldade{
+    display: flex;
+    flex-direction: column;
+}
 
 .nome-site{
     font-size: 25px;

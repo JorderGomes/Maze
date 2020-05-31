@@ -19,6 +19,21 @@ var pilha = [], labrintoCompleto = [], tabuleiroCompleto = [], labrintoDisponive
 var alcanceCasas = [];
 
 
+var rad = document.getElementsByClassName("pode");
+
+for (var i = 0; i < rad.length; i++) {
+    rad[i].onclick = function() {
+      updateGameMode();
+    }
+  };
+
+function updateGameMode(){
+    alcanceMaximo = document.querySelectorAll('[name=mode]:checked')[0].value;
+    console.log(alcanceMaximo);
+    apagarLuzes();
+    acenderLuzes();
+}
+
 function gerarId(x, y){
     return "casa-" + x + "-" + y;
 }
@@ -164,7 +179,7 @@ function escolherCasaAleatoria(listaCasas){
 
 function escolherCasaAleatoriaDoLabirinto(){
     let i = parseInt ( (Math.random() * (labrintoCompleto.length - 1)) );
-    console.log(i);
+    // console.log(i);
     // console.log(tabu)
     return labrintoCompleto[i];
 }
@@ -200,6 +215,7 @@ function swapCasaClass(casa, remClass, addClass){
 
 function acenderLuzes(){
     let maximo = alcanceMaximo;
+    console.log(maximo);
     alcanceCasas = [];
     let alcance = getNeibs(Jogador.house);
     for(viz of alcance){
