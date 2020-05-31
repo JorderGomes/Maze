@@ -14,7 +14,7 @@ body{
     display: flex;
     flex-direction: column;
     /* justify-content: center; */
-    width: 20vw;
+    width: 25vw;
     min-height: 100vh;
     border-right: 1px solid cadetblue;
     
@@ -34,7 +34,8 @@ h2{
 }
 
 p{
-    margin: 5px 0px 5px 10px;
+    text-align: justify;
+    margin: 5px 10px 5px 10px;
 }
 
 
