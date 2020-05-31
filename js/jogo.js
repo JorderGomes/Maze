@@ -516,10 +516,30 @@ function getNeibs(casa){
 }
 
 
+$("#btn-up").click(function (){
+    var e = new KeyboardEvent("keydown", { key : "ArrowUp"});
+    document.dispatchEvent(e);
+    console.log("up");
+});
 
+$("#btn-down").click(function (){
+    var e = new KeyboardEvent("keydown", { key : "ArrowDown"});
+    document.dispatchEvent(e);
+    console.log("down");
+});
 
+$("#btn-left").click(function (){
+    var e = new KeyboardEvent("keydown", { key : "ArrowLeft"});
+    document.dispatchEvent(e);
+    console.log("left");
+});
+$("#btn-right").click(function (){
+    var e = new KeyboardEvent("keydown", { key : "ArrowRight"});
+    document.dispatchEvent(e);
+    console.log("right");
+});
 
-
+ 
 
 
 
@@ -612,23 +632,23 @@ function vizinhoAbaixo(x, y){
 
 
 
-$("#btn-menu").click(function(){
-    $("#menu").fadeIn();
-    $("#menu").show();
+$("#btn-rules").click(function(){
+    $(".regras").fadeIn();
+    $(".regras").show();
     
-    $("#btn-menu").hide();
-    $("#btn-close").show();
+    // $("#btn-menu").hide();
+    // $("#btn-close").show();
     // $("#btn-menu").removeClass("btn-menu");
     // $("#btn-menu").addClass("btn-close");
-    console.log("menu aparecendo");
+    console.log("regras aparecendo");
 });
 
-$("#btn-close").click(function(){
-    $("#menu").fadeOut();
-    $("#menu").hide();
-    $("#btn-menu").show();
-    $("#btn-close").hide();
+$("#btn-rules-close").click(function(){
+    $(".regras").fadeOut();
+    $(".regras").hide();
+    // $("#btn-menu").show();
+    // $("#btn-close").hide();
     // $("#btn-menu").removeClass("btn-close");
     // $("#btn-menu").addClass("btn-menu");
-    console.log("menu sumido");
+    console.log("rules sumido");
 });

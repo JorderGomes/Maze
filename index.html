@@ -13,74 +13,108 @@
         <header>
             <h1 class="nome-site">Dark maze</h1>
         </header>
-        <div class="regras">
-            <h3>Regras</h3>
+        <div class="center">
+            <div class="regras">
+                <div class="regras-header">
+                    <h3>Regras</h3>
+                    <button id="btn-rules-close" class="btn">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <p>
+                    <i class="fas fa-square-full"></i>
+                    Neste labirinto os caminhos não são limitados por paredes mas sim por 
+                    um abismo. Portanto mantenha-se no caminho e não se jogue no abismo.
+                </p>
 
-            <p>
-                <i class="fas fa-square-full"></i>
-                Neste labirinto os caminhos não são limitados por paredes mas sim por 
-                um abismo. Portanto mantenha-se no caminho e não se jogue no abismo.
-            </p>
+                <p>
+                    <i class="fas fa-square-full amarelo"></i>
+                    Este é você. Guie-se pelo caminho até seu objetivo com este avatar.
+                </p>
 
-            <p>
-                <i class="fas fa-square-full amarelo"></i>
-                Este é você. Guie-se pelo caminho até seu objetivo com este avatar.
-            </p>
+                <p>
+                    <i class="fas fa-square-full vermelho"></i>
+                    Este é seu objetivo. Corra pelo labirinto até alcançar e comer esta fruta.
+                </p>
+                
+                <p>
+                    <i class="fas fa-square-full branco"></i>
+                    O labirinto é um local escuro, mas por sorte você tem uma tocha para 
+                    iluminar o caminho ao seu redor.
+                </p>
 
-            <p>
-                <i class="fas fa-square-full vermelho"></i>
-                Este é seu objetivo. Corra pelo labirinto até alcançar e comer esta fruta.
-            </p>
-            
-            <p>
-                <i class="fas fa-square-full branco"></i>
-                O labirinto é um local escuro, mas por sorte você tem uma tocha para 
-                iluminar o caminho ao seu redor.
-            </p>
+                <div class="dificuldade">
+                    <h3>Dificuldade do jogo</h3>
+                    <h5>5 é o mais fácil e 0 é o mais dificil</h5>
 
-            <div class="dificuldade">
-                <h3>Dificuldade do jogo</h3>
-                <h5>5 é o mais fácil e 0 é o mais dificil</h5>
-
-                <dv class="gm">
-                    <span>
-                        <input type="radio" id="cinco" name="mode"  value="5" checked
-                        class="pode">
-                        <label for="cinco">5</label>
-                    </span>
-                    <span>
-                        <input type="radio" id="quatro" name="mode"  value="4" 
-                        class="pode">
-                        <label for="quatro">4</label>
-                    </span>
-                    <span>
-                        <input type="radio" id="tres" name="mode"  value="3" 
-                        class="pode">
-                        <label for="tres">3</label>
-                    </span>
-                    <span>
-                        <input type="radio" id="dois" name="mode"  value="2" 
-                        class="pode">
-                        <label for="dois">2</label>
-                    </span>
-                    <span>
-                        <input type="radio" id="um" name="mode"  value="1" 
-                        class="pode">
-                        <label for="um">1</label>
-                    </span>
-                    <span>
-                        <input type="radio" id="zero" name="mode"  value="0" 
-                        class="pode">
-                        <label for="zero">0</label>
-                    </span>
-                </dv>
-            </div>
-            
+                    <dv class="gm">
+                        <span>
+                            <input type="radio" id="cinco" name="mode"  value="5" checked
+                            class="pode">
+                            <label for="cinco">5</label>
+                        </span>
+                        <span>
+                            <input type="radio" id="quatro" name="mode"  value="4" 
+                            class="pode">
+                            <label for="quatro">4</label>
+                        </span>
+                        <span>
+                            <input type="radio" id="tres" name="mode"  value="3" 
+                            class="pode">
+                            <label for="tres">3</label>
+                        </span>
+                        <span>
+                            <input type="radio" id="dois" name="mode"  value="2" 
+                            class="pode">
+                            <label for="dois">2</label>
+                        </span>
+                        <span>
+                            <input type="radio" id="um" name="mode"  value="1" 
+                            class="pode">
+                            <label for="um">1</label>
+                        </span>
+                        <span>
+                            <input type="radio" id="zero" name="mode"  value="0" 
+                            class="pode">
+                            <label for="zero">0</label>
+                        </span>
+                    </div>
+                </div>
+                
+            </div> <!-- / regras -->
         </div>
+        
     </div>
     <div class="container">
+        <div class="show-regras">
+            <button id="btn-rules" class="btn primary">Como jogar</button>
+        </div>
        <div id="maze">
  
+       </div>
+       <div class="controles">
+           <div class="row center">
+            <button id="btn-up" class="btn primary">
+                <i class="fas fa-arrow-up"></i>
+            </button>
+           </div>
+           
+           <div class="row side">
+            <button id="btn-left" class="btn primary">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <button id="btn-right" class="btn primary">
+                <i class="fas fa-arrow-right"></i>
+            </button>
+           </div>
+
+           <div class="row center">
+            <button id="btn-down" class="btn primary">
+                <i class="fas fa-arrow-down"></i>
+            </button>
+           </div>
+           
+           
        </div>
     </div>
 
