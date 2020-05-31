@@ -2,7 +2,7 @@ const altura = 10, largura = 10;
 var tabuleiro = document.getElementById("maze");
 var jogo = true;
 var houseFruit;
-var alcanceMaximo = 5;
+var alcanceMaximo = 3;
 // var playerCasa;
 
 const vazia = 'vazia';
