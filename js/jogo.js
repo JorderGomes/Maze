@@ -2,7 +2,7 @@ const altura = 10, largura = 10;
 var tabuleiro = document.getElementById("maze");
 var jogo = true;
 var houseFruit;
-var alcanceMaximo = 3;
+var alcanceMaximo = 1;
 // var playerCasa;
 
 const vazia = 'vazia';
@@ -95,7 +95,7 @@ const eventosPlayer = {
         acenderLuzes();
         detectarColisao();
         // console.log(houseFruit);
-        console.log("Andando para cima");
+        // console.log("Andando para cima");
     },
 
     ArrowDown(){
@@ -106,7 +106,7 @@ const eventosPlayer = {
         Jogador.house.atualizarCasa(Jogador.house.x + 1, Jogador.house.y);
         acenderLuzes();
         detectarColisao();
-        console.log("Andando para baixo");
+        // console.log("Andando para baixo");
     },
 
     ArrowLeft(){
@@ -117,7 +117,7 @@ const eventosPlayer = {
         Jogador.house.atualizarCasa(Jogador.house.x, Jogador.house.y - 1);
         acenderLuzes();
         detectarColisao();
-        console.log("Andando para esquerda");
+        // console.log("Andando para esquerda");
     },
 
     ArrowRight(){
@@ -128,7 +128,7 @@ const eventosPlayer = {
         Jogador.house.atualizarCasa(Jogador.house.x, Jogador.house.y + 1);
         acenderLuzes();
         detectarColisao();
-        console.log("Andando para direita");
+        // console.log("Andando para direita");
     }
 }
 
@@ -199,8 +199,8 @@ function atribuirCasaInicial(){
 
 function atribuirCasaFruta(){
     houseFruit = escolherCasaAleatoria(labrintoDisponivel);
-    // console.log(houseFruit);
     swapCasaClass(houseFruit.casa, aberto, fruta);
+    console.log(houseFruit);
 
     const disponivel = el => { return !el.casa.classList.contains(fruta); }
     // console.log(labrintoCompleto);
@@ -215,7 +215,7 @@ function swapCasaClass(casa, remClass, addClass){
 
 function acenderLuzes(){
     let maximo = alcanceMaximo;
-    console.log(maximo);
+    // console.log(maximo);
     alcanceCasas = [];
     let alcance = getNeibs(Jogador.house);
     for(viz of alcance){
@@ -292,7 +292,7 @@ document.addEventListener("keydown", function(e){
 
 
 function finalJogo(resultado){
-    jogo = false;
+    // jogo = false;
     if(resultado){
         window.alert("Você venceu!");
     } 
@@ -301,12 +301,15 @@ function finalJogo(resultado){
     } else{
         console.error("Chame esta funcção com um valor boolean");
     }
+    $("#maze").empty();
+    pilha = [], labrintoCompleto = [], tabuleiroCompleto = [], labrintoDisponivel = [];
+    montarTabuleiro();
 }
 
 
 
 function detectarColisao(){
-    console.log(houseFruit);
+    // console.log(houseFruit);
     if(houseFruit.casa.classList.contains(fruta) 
         &&
         houseFruit.casa.classList.contains(personagem)){
@@ -339,21 +342,7 @@ function detectarColisao(){
 
 function gerarLabirinto(){
     let casaInicial =  escolherCasaInicialAleatoria();
-    // =  escolherCasaAleatoria();
-    
-    // new House (
-    //     document.getElementById(gerarId(1,  1)),
-    //     1,
-    //     1
-    // );
 
-
-    // = escolherCasaAleatoria();
-
-
-
-
-    // let casaDois = escolherCasaAleatoria();
     swapCasaClass(casaInicial.casa, vazia, aberto);
     pilha.push(casaInicial);
     // pilha.push(casaDois);
@@ -387,7 +376,7 @@ function gerarLabirinto(){
         }
         iteracoes++;
     }
-    
+    labrintoDisponivel = labrintoCompleto;
 }
 
 
@@ -633,22 +622,22 @@ function vizinhoAbaixo(x, y){
 
 
 $("#btn-rules").click(function(){
-    $(".regras").fadeIn();
-    $(".regras").show();
+    $('#popup-canva').css({
+        'display': 'flex'
+        
+    });
+
+    $("#popup-canva").show();
+
+    $("#popup-rules").show();
     
-    // $("#btn-menu").hide();
-    // $("#btn-close").show();
-    // $("#btn-menu").removeClass("btn-menu");
-    // $("#btn-menu").addClass("btn-close");
     console.log("regras aparecendo");
 });
 
 $("#btn-rules-close").click(function(){
-    $(".regras").fadeOut();
-    $(".regras").hide();
-    // $("#btn-menu").show();
-    // $("#btn-close").hide();
-    // $("#btn-menu").removeClass("btn-close");
-    // $("#btn-menu").addClass("btn-menu");
+    $("#popup-canva").hide();
+
+    $("#popup-rules").hide();
+
     console.log("rules sumido");
 });
