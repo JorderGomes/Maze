@@ -40,11 +40,6 @@ h3, h5{
     margin: 15px 0px 10px 20px; 
 }
 
-/* p{
-    text-align: justify;
-    margin: 5px 10px 5px 10px;
-} */
-
 span{
     margin-left: 10px;
 }
@@ -83,7 +78,6 @@ span{
     font-size: 1rem;
     line-height: 1.5;
     border-radius: 0.25rem;
-    
     display: none;
 }
 
@@ -100,11 +94,9 @@ span{
     margin: 20px 0px 0px;
 }
 
-
 .primary{
     color: var(--color-text);;
     background-color: var(--colorWrong);
-    /* border-color: #007bff; */
 }
 
 #menu{
@@ -149,13 +141,8 @@ span{
     text-align: justify;
 }
 
-
 #maze{
-    /* display: flex;
-    flex-wrap: wrap;
-    align-items: stretch; */
     margin-top: 20px;
-    
     width: 33vw;
     height: 33vw;
 }
@@ -165,12 +152,9 @@ span{
     width: 3vw;
     height: 3vw;
     border: 1px solid black;
-    /* background-color: var(--colorWrong); */
-    
 }
 
 .vazia{
-    /* background-color: var(--colorWrong); */
     background-color: #000;
 }
 
@@ -179,8 +163,6 @@ span{
 }
 
 .aberto{
-    /* background-color: var(--color-text);; */
-    /* background-color: var(--colorWrong); */
     background-color: #000;
 }
 
@@ -207,7 +189,6 @@ span{
 .luz{
     background-color: var(--color-text);;
 }
-
 
 .amarelo{
     color: yellow;
@@ -284,13 +265,30 @@ span{
 
 #btn-rules-close{
     display: block;
-
 }
 
 .pointer:hover{
     cursor: pointer;
 }
 
+/* feedback */
+
+.feedback-link{
+    width: 60px;
+    height: 60px;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 28px;
+    color: var(--color-bg-popup);
+    border: 1px solid var(--color-bg-popup);
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+}
+
+/* media */
 @media screen and (min-width: 800px){
     .regras{
         display: block;
